@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Blog</title>
+  <link rel="stylesheet" href="../public/css/main.css">
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Blog Website</h1>
+  </header>
+  
+  <div class="sidebar">
+    <h2>Categories</h2>
+    <ul id="categories"></ul>
+  </div>
+  
+  <div class="main-content">
+    <h2>Latest Posts</h2>
+    <ul id="posts"></ul>
+  </div>
+  
+  <footer>
+    <p>© 2023 My Blog. All rights reserved.</p>
+  </footer>
+
+  <script src="blog-service.js"></script>
+  <script>
+    // Fetch categories from categories.json
+    fetch('/data/categories.json')
+      .then(response => response.json())
+      .then(data => {
+        const categories = document.getElementById('categories');
+        data.forEach(category => {
+          const listItem = document.createElement('li');
+          listItem.textContent = category.name;
+          categories.appendChild(listItem);
+        });
+      });
+
+    // Fetch posts from posts.json
+    fetch('/data/posts.json')
+      .then(response => response.json())
+      .then(data => {
+        const posts = document.getElementById('posts');
+        data.forEach(post => {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `
+            <h3>${post.title}</h3>
+            <p>${post.body}</p>
+          `;
+          posts.appendChild(listItem);
+        });
+      });
+  </script>
+</body>
+</html>
