@@ -1,70 +1,37 @@
-/* Reset some default styles */
-body, h1, h2, h3, p, ul {
-    margin: 0;
-    padding: 0;
+/*styles for the Web322-APP */
+
+/* Header */
+header {
+    margin-bottom: 20px;
   }
   
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+  /* Main content */
+  main {
+    margin-top: 70px;
+    margin-bottom: 20px;
   }
   
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  /* Footer */
+  footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
   }
   
-  h1 {
-    font-size: 24px;
+  /* Return button */
+  .return-button {
+    margin-top: 20px;
   }
   
-  .sidebar {
-    background-color: #fff;
-    color: #333;
-    width: 200px;
-    padding: 20px;
-    float: left;
-  }
+  /* Responsive styles */
+  @media (max-width: 767px) {
+    /* Header */
+    .navbar-brand {
+      font-size: 1.5rem;
+    }
   
-  .main-content {
-    background-color: #fff;
-    color: #333;
-    padding: 20px;
-    margin-left: 220px;
-  }
-  
-  h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  /* Style the categories list */
-  #categories li {
-    cursor: pointer;
-  }
-  
-  #categories li:hover {
-    text-decoration: underline;
-  }
-  
-  /* Style the posts section */
-  #posts h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
-  }
-  
-  #posts p {
-    color: #666;
+    /* Main content */
+    main {
+      margin-top: 60px;
+    }
   }
   
