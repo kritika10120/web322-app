@@ -1,53 +1,65 @@
+/***************************
+*  WEB322 – Assignment 02
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
+*  (including 3rd party web sites) or distributed to other students.
+* 
+*  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 05-06-2023
+*  Cyclic Web App URL: ____________________
+*
+*  GitHub Repository URL: _https://github.com/kritika10120/web322-app/tree/main_________________
+*
+****************************/
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
+
 const app = express();
-const blogService = require('./blog-service');
+const PORT = 5500;
 
-// Routes
-app.get('/', (req, res) => {
-  res.redirect('/about');
-});
-
+// Serve the about.html file
 app.get('/about', (req, res) => {
-  res.sendFile(__dirname + '/views/about.html');
+  res.sendFile(path.join(__dirname, 'views/about.html'));
 });
 
-app.use(express.static('public'));
-
-app.get('/blog', (req, res) => {
-  blogService.getPublishedPosts()
-    .then((posts) => {
-      res.json(posts);
-    })
-    .catch((err) => {
-      res.json({ message: err });
-    });
-});
-
-app.get('/posts', (req, res) => {
-  blogService.getAllPosts()
-    .then((posts) => {
-      res.json(posts);
-    })
-    .catch((err) => {
-      res.json({ message: err });
-    });
-});
-
+// Serve the categories.json file
 app.get('/categories', (req, res) => {
-  blogService.getCategories()
-    .then((categories) => {
+  const categoriesPath = path.join(__dirname, 'data/categories.json');
+  fs.readFile(categoriesPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      const categories = JSON.parse(data);
       res.json(categories);
-    })
-    .catch((err) => {
-      res.json({ message: err });
-    });
+    }
+  });
 });
 
+// Serve the posts.json file
+app.get('/posts', (req, res) => {
+  const postsPath = path.join(__dirname, 'data/posts.json');
+  fs.readFile(postsPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      const posts = JSON.parse(data);
+      res.json(posts);
+    }
+  });
+});
+
+// Serve the addPost.html file
+app.get('/posts/add', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/addPost.html'));
+});
+
+// Serve the about.html file for all other routes
 app.get('*', (req, res) => {
-  res.status(404).send('Page Not Found');
+  res.sendFile(path.join(__dirname, 'views/about.html'));
 });
 
-const PORT = process.env.PORT || 8080;
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Express http server listening on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
