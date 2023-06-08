@@ -1,4 +1,15 @@
-const express = require('express');
+/***************************
+*  WEB322 – Assignment 02
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
+*  (including 3rd party web sites) or distributed to other students.
+* 
+*  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 05-06-2023
+*  Cyclic Web App URL: _________https://web322appassignment03.cyclic.app/___________
+*
+*  GitHub Repository URL: __________________
+*
+****************************/
+onst express = require('express');
 const path = require('path');
 const fs = require('fs');
 
