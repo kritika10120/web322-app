@@ -4,7 +4,7 @@
 *  (including 3rd party web sites) or distributed to other students.
 * 
 *  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 08-06-2023
-*  Cyclic Web App URL: ____________________
+*  Cyclic Web App URL: _________https://web322appassignment03.cyclic.app/___________
 *
 *  GitHub Repository URL: _https://github.com/kritika10120/web322-app/tree/main_________________
 *
