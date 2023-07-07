@@ -2,93 +2,98 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Latest compiled and minified Bootstrap 3.4.1 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/main.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified Bootstrap 3.4.1 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css" />
 
-    <title>WEB322 Kritika Kritika Blog</title>
+  <title>WEB322 Kritika Kritika Blog</title>
+
+  <style>
+    /* Additional CSS styles */
+    #blog-content {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <span class="navbar-brand" href="#">WEB322 - Kritika Kritika</span>
-            </div>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand" href="#">WEB322 - Kritika Kritika</span>
+      </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="/blog">Blog</a></li>
-                    <li class="active"><a href="/about">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/posts">Posts</a></li>
-                    <li><a href="/categories">Categories</a></li>
-                    <li><a href="/posts/add">Add Post</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container" style="padding-top:60px">
-        <div class="row">
-            <section class="main col-md-9">
-                <div id="posts">
-                    <!-- Posts will be dynamically added here -->
-                </div>
-            </section>
-            <aside class="col-md-3">
-                <h2>Coming Soon</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam accumsan libero a sem venenatis
-                    pharetra.</p>
-            </aside>
-        </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/blog" id="blog-link">Blog</a></li>
+          <li class="active"><a href="/about">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/posts">Posts</a></li>
+          <li><a href="/categories">Categories</a></li>
+          <li><a href="/posts/add">Add Post</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container" style="padding-top:60px">
+    <div class="row">
+      <section class="main col-md-9">
+        <article id="blog-content">
+          <h2>Nulla semper tellus id</h2>
+          <img src="feature_image.jpg" alt="Feature Image">
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam laoreet, libero et tristique pellentesque,
+            tellus sem mollis dui, in sodales elit erat vitae risus. Duis a mi fringilla mi lacinia mattis. Integer eu
+            lacus. Quisque imperdiet, erat nonummy ultricies ornare, elit elit fermentum risus, at fringilla purus
+            mauris a nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed
+            pharetra, felis eget</p>
+          <p>Category: 4<br>
+            Last Updated: 2020-12-26</p>
+        </article>
+      </section>
+      <aside class="col-md-3" style="display: none;">
+        <h2>Coming Soon</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam accumsan libero a sem venenatis pharetra.
+        </p>
+      </aside>
     </div>
+  </div>
 
-    <!-- Latest compiled and minified jQuery 3.6.0 JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified jQuery 3.6.0 JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <!-- Latest compiled and minified Bootstrap 3.4.1 JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-        crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified Bootstrap 3.4.1 JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
 
-    <script>
-        $(document).ready(function() {
-            // Fetch posts from JSON file
-            $.getJSON("data/posts.json", function(data) {
-                var postsHtml = '';
-
-                // Generate HTML for each post
-                data.forEach(function(post) {
-                    postsHtml += '<article>';
-                    postsHtml += '<h2>' + post.title + '</h2>';
-                    postsHtml += '<p>ID: ' + post.id + '</p>';
-                    postsHtml += '<p>Title: ' + post.title + '</p>';
-                    postsHtml += '<p>Post Date: ' + post.postDate + '</p>';
-                    postsHtml += '<p>Category: ' + post.category + '</p>';
-                    postsHtml += '<p>Published: ' + post.published + '</p>';
-                    postsHtml += '</article>';
-                });
-
-                // Add generated HTML to the "posts" div
-                $('#posts').html(postsHtml);
-            });
-        });
-    </script>
+  <script>
+    // JavaScript code
+    $(document).ready(function () {
+      $('#blog-link').click(function (event) {
+        event.preventDefault();
+        // Show the blog content
+        $('#blog-content').show();
+        // Hide other sections
+        $('section.main').hide();
+        $('aside').hide();
+      });
+    });
+  </script>
 </body>
 
 </html>
