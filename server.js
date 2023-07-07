@@ -8,8 +8,6 @@
 *
 *  GitHub Repository URL: ______https://github.com/kritika10120/web322-app____________
 *
-****************************/
-
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -17,13 +15,33 @@ const fs = require('fs');
 const app = express();
 const PORT = 5500;
 
+// Serve the home page
+app.get('/', (req, res) => {
+  res.send('<h1>Welcome to the Home Page</h1>');
+});
+
 // Serve the about.html file
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/about.html'));
 });
 
-// Serve the categories.json file
+// Serve the categories.html file
 app.get('/categories', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/categories.html'));
+});
+
+// Serve the posts.html file
+app.get('/posts', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/posts.html'));
+});
+
+// Serve the addPost.html file
+app.get('/posts/add', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/addPost.html'));
+});
+
+// Serve the categories.json file
+app.get('/api/categories', (req, res) => {
   const categoriesPath = path.join(__dirname, 'data/categories.json');
   fs.readFile(categoriesPath, 'utf8', (err, data) => {
     if (err) {
@@ -37,7 +55,7 @@ app.get('/categories', (req, res) => {
 });
 
 // Serve the posts.json file
-app.get('/posts', (req, res) => {
+app.get('/api/posts', (req, res) => {
   const postsPath = path.join(__dirname, 'data/posts.json');
   fs.readFile(postsPath, 'utf8', (err, data) => {
     if (err) {
@@ -48,11 +66,6 @@ app.get('/posts', (req, res) => {
       res.json(posts);
     }
   });
-});
-
-// Serve the addPost.html file
-app.get('/posts/add', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/addPost.html'));
 });
 
 // Serve the about.html file for all other routes
