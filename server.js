@@ -49,7 +49,7 @@ app.get('/categories', (req, res) => {
 });
 
 // Serve the posts.json file
-app.get('/post', (req, res) => {
+app.get('/posts', (req, res) => {
   const postsPath = path.join(__dirname, 'data/posts.json');
   fs.readFile(postsPath, 'utf8', (err, data) => {
     if (err) {
