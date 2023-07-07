@@ -43,7 +43,20 @@ app.get('/categories', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const categories = JSON.parse(data);
-      res.json(categories);
+      const tableRows = categories.map(category => {
+        return `<tr>
+          <td>${category.id}</td>
+          <td>${category.name}</td>
+        </tr>`;
+      });
+      const table = `<table>
+        <tr>
+          <th>Category ID</th>
+          <th>Category Name</th>
+        </tr>
+        ${tableRows.join('')}
+      </table>`;
+      res.send(table);
     }
   });
 });
