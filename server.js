@@ -13,29 +13,10 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 8080;
-// Serve the about.html file
-app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/about.html'));
-});
+const PORT = 5500;
 
-// Serve the categories.html file
+// Serve the categories.html file with categories data
 app.get('/categories', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/categories.html'));
-});
-
-// Serve the posts.html file
-app.get('/posts', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/posts.html'));
-});
-
-// Serve the addPost.html file
-app.get('/posts/add', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/addPost.html'));
-});
-
-// Serve the categories.json file
-app.get('/api/categories', (req, res) => {
   const categoriesPath = path.join(__dirname, 'data/categories.json');
   fs.readFile(categoriesPath, 'utf8', (err, data) => {
     if (err) {
@@ -43,13 +24,17 @@ app.get('/api/categories', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const categories = JSON.parse(data);
-      res.json(categories);
+      let categoriesHTML = '<h1>Categories</h1>';
+      categories.forEach((category) => {
+        categoriesHTML += `<p>${category}</p>`;
+      });
+      res.send(categoriesHTML);
     }
   });
 });
 
-// Serve the posts.json file
-app.get('/api/posts', (req, res) => {
+// Serve the posts.html file with posts data
+app.get('/posts', (req, res) => {
   const postsPath = path.join(__dirname, 'data/posts.json');
   fs.readFile(postsPath, 'utf8', (err, data) => {
     if (err) {
@@ -57,14 +42,18 @@ app.get('/api/posts', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const posts = JSON.parse(data);
-      res.json(posts);
+      let postsHTML = '<h1>Posts</h1>';
+      posts.forEach((post) => {
+        postsHTML += `<p>${post}</p>`;
+      });
+      res.send(postsHTML);
     }
   });
 });
 
-// Serve the about.html file for all other routes
+// Serve the index.html file for all other routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/about.html'));
+  res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
 // Start the server
