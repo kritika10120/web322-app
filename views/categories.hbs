@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>Categories</h2>
+    <hr />
+
+    {{#if categories}}
+      <ul>
+        {{#each categories}}
+          <li>{{this.id}}: {{this.category}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>No results</p>
+    {{/if}}
+  </div>
+</div>
