@@ -57,16 +57,26 @@ app.get('/posts', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const posts = JSON.parse(data);
-      const formattedPosts = posts.map(post => {
-        return {
-          'Post ID': post.id,
-          'Title': post.title,
-          'Post Date': post.date,
-          'Category': post.category,
-          'Published': post.published
-        };
+      const tableRows = posts.map(post => {
+        return `<tr>
+          <td>${post.id}</td>
+          <td>${post.title}</td>
+          <td>${post.date}</td>
+          <td>${post.category}</td>
+          <td>${post.published}</td>
+        </tr>`;
       });
-      res.send('<pre>' + JSON.stringify(formattedPosts, null, 2) + '</pre>');
+      const table = `<table>
+        <tr>
+          <th>Post ID</th>
+          <th>Title</th>
+          <th>Post Date</th>
+          <th>Category</th>
+          <th>Published</th>
+        </tr>
+        ${tableRows.join('')}
+      </table>`;
+      res.send(table);
     }
   });
 });
@@ -85,3 +95,4 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
