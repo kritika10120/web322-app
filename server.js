@@ -13,13 +13,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 5500;
-
-// Serve the home page
-app.get('/', (req, res) => {
-  res.send('<h1>Welcome to the Home Page</h1>');
-});
-
+const PORT = 8080;
 // Serve the about.html file
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/about.html'));
