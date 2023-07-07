@@ -61,7 +61,7 @@ app.get('/posts', (req, res) => {
         return `<tr>
           <td>${post.id}</td>
           <td>${post.title}</td>
-          <td>${post.date}</td>
+          <td>${post.postDate}</td>
           <td>${post.category}</td>
           <td>${post.published}</td>
         </tr>`;
