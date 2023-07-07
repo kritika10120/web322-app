@@ -57,7 +57,16 @@ app.get('/posts', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const posts = JSON.parse(data);
-      res.json(posts);
+      const formattedPosts = posts.map(post => {
+        return {
+          'Post ID': post.id,
+          'Title': post.title,
+          'Post Date': post.date,
+          'Category': post.category,
+          'Published': post.published
+        };
+      });
+      res.send('<pre>' + JSON.stringify(formattedPosts, null, 2) + '</pre>');
     }
   });
 });
