@@ -1,110 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Latest compiled and minified Bootstrap 5.3.0 CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/main.css"/>
-    <style>
-        .return-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-        .return-button a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .return-button a:hover {
-            text-decoration: none;
-        }
-    </style>
-    <title>Web322-APP</title>
+    <!-- Latest compiled and minified Bootstrap 3.4.1 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <title>WEB322 Kritika Kritika Blog</title>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="#">WEB322 - Kritika Kritika</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/about">About</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/posts">Posts</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/categories">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/posts/add">Add Post</a>
-                        </li>
-                    </ul>
-                </div>
+                <span class="navbar-brand" href="#">WEB322 - Kritika Kritika</span>
             </div>
-        </nav>
-    </header>
 
-    <main>
-        <div class="container">
-            <h1>Add Post</h1>
-            <form>
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
-                </div>
-                <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <select class="form-select" id="category" name="category" required>
-                        <option value="">Select Category</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="body" class="form-label">Body</label>
-                    <textarea class="form-control" id="body" name="body" rows="5" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="image" class="form-label">Image URL</label>
-                    <input type="url" class="form-control" id="image" name="image">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/posts">Posts</a></li>
+                    <li><a href="/categories">Categories</a></li>
+                    <li class="active" ><a href="/posts/add">Add Post</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container" style="padding-top:60px">
+        <div class="row">
+  <div class="col-md-12">
+
+    <h2>Add Post</h2>
+
+    <br />
+
+    <form method="post" action="/posts/add" enctype="multipart/form-data">
+
+      <fieldset>
+        <legend>Feature Image</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <input class="form-control" id="featureImage" name="featureImage" type="file" />
+            </div>
+          </div>
         </div>
-    </main>
+      </fieldset>
+      <br />
+      <fieldset>
+        <legend>Post Content</legend>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input class="form-control" id="title" name="title" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="body">Body:</label>
+              <textarea class="form-control" id="body" name="body" rows=15></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="category">Category:</label>
+              <select class="form-control" name="category" id="category">
+                <option value="1">Technology</option>
+                <option value="2">Gaming</option>
+                <option value="3">Fashion</option>
+                <option value="4">Education</option>
+                <option value="5">Wellness</option>
 
-    <footer class="bg-light text-center py-3">
-        <p>&copy; 2023 Kritika Kritika Web322-APP. All rights reserved.</p>
-    </footer>
-    <button id="returnButton" class="btn btn-success return-button"><a href="/views/about.html">Return to home</a></button>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="category">Visibility:</label>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="published" id="published"> Published
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Fetch categories from categories.json and populate the category select dropdown
-        fetch("/categories")
-            .then(response => response.json())
-            .then(categories => {
-                const categorySelect = document.getElementById("category");
-                categories.forEach(category => {
-                    const option = document.createElement("option");
-                    option.value = category.id;
-                    option.textContent = category.category;
-                    categorySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error("Error fetching categories:", error));
-    </script>
-    <script src="/blog-service.js"></script>
+      </fieldset>
+
+      <hr />
+
+      <input type="submit" class="btn btn-primary pull-right" value="Add Post" /><br /><br /><br />
+
+    </form>
+  </div>
+</div>
+    </div>
+
+    <!-- Latest compiled and minified jQuery 3.6.0 JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified Bootstrap 3.4.1 JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
