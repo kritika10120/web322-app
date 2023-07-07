@@ -105,25 +105,29 @@ Continued:
         crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function() {
-            // Fetch posts from JSON file
-            $.getJSON("data/posts.json", function(data) {
-                var posts = data.posts;
-                var postsHtml = '';
+  $(document).ready(function() {
+    // Fetch posts from JSON file
+    $.getJSON("data/posts.json", function(data) {
+      var posts = data;
+      var postsHtml = '';
 
-                // Generate HTML for each post
-                posts.forEach(function(post, index) {
-                    postsHtml += '<article>';
-                    postsHtml += '<h2>' + post.title + '</h2>';
-                    postsHtml += '<p>' + post.content + '</p>';
-                    postsHtml += '</article>';
-                });
+      // Generate HTML for each post
+      posts.forEach(function(post) {
+        postsHtml += '<article>';
+        postsHtml += '<h2>' + post.title + '</h2>';
+        postsHtml += '<p>ID: ' + post.id + '</p>';
+        postsHtml += '<p>Post Date: ' + post.postDate + '</p>';
+        postsHtml += '<p>Category: ' + post.category + '</p>';
+        postsHtml += '<p>Published: ' + post.published + '</p>';
+        postsHtml += '</article>';
+      });
 
-                // Add generated HTML to the "posts" div
-                $('#posts').html(postsHtml);
-            });
-        });
-    </script>
+      // Add generated HTML to the "posts" div
+      $('#posts').html(postsHtml);
+    });
+  });
+</script>
+
 </body>
 
 </html>
