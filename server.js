@@ -32,7 +32,7 @@ app.get('/categories', (req, res) => {
       const tableRows = categories.map(category => {
         return `<tr>
           <td>${category.id}</td>
-          <td>${category.category}</td>
+          <td>${category.name}</td>
         </tr>`;
       });
       const table = `<table>
@@ -60,7 +60,7 @@ app.get('/posts', (req, res) => {
         return `<tr>
           <td>${post.id}</td>
           <td>${post.title}</td>
-          <td>${post.postDate}</td>
+          <td>${post.date}</td>
           <td>${post.category}</td>
           <td>${post.published}</td>
         </tr>`;
