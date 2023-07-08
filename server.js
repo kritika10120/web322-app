@@ -1,13 +1,12 @@
 /***************************
-*  WEB322 – Assignment 03
+*  WEB322 – Assignment 04
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 08-06-2023
-*  Cyclic Web App URL: _________https://web322appassignment03.cyclic.app
+*  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 07-07-2023
+*  Cyclic Web App URL: https://shy-erin-bear-gown.cyclic.app/
 *
-*  GitHub Repository URL: ______https://github.com/kritika10120/web322-app____________
-*
+*  GitHub Repository URL: https://github.com/kritika10120/web322-app
 ****************************/
 
 const express = require('express');
@@ -62,7 +61,7 @@ app.get('/posts', (req, res) => {
         return `<tr>
           <td>${post.id}</td>
           <td>${post.title}</td>
-          <td>${post.date}</td>
+          <td>${post.postDate}</td>
           <td>${post.category}</td>
           <td>${post.published}</td>
         </tr>`;
