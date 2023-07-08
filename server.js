@@ -10,46 +10,41 @@
 *
 
 const express = require('express');
+const app = express();
 const fs = require('fs');
 const path = require('path');
 
-const app = express();
-const PORT = 3000;
-
-// Set up static file serving
+// Serve static files from the "public" folder
 app.use(express.static('public'));
 
-// Define a route for the about.html page
-app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'about.html'));
-});
-
-// Define a route for the blog.html page
+// Define the route for the "Blog" link
 app.get('/blog', (req, res) => {
-  fs.readFile(path.join(__dirname, 'data', 'posts.json'), 'utf8', (err, postsData) => {
+  // Read the contents of blog.hbs file
+  fs.readFile(path.join(__dirname, 'views', 'blog.hbs'), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
-      res.sendStatus(500);
-      return;
+      return res.status(500).send('Internal Server Error');
     }
 
-    fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8', (err, categoriesData) => {
+    // Read the post data from posts.json
+    fs.readFile(path.join(__dirname, 'data', 'posts.json'), 'utf8', (err, postData) => {
       if (err) {
         console.error(err);
-        res.sendStatus(500);
-        return;
+        return res.status(500).send('Internal Server Error');
       }
 
-      const templatePath = path.join(__dirname, 'views', 'blog.hbs');
-      fs.readFile(templatePath, 'utf8', (err, templateContent) => {
+      // Read the category data from categories.json
+      fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8', (err, categoryData) => {
         if (err) {
           console.error(err);
-          res.sendStatus(500);
-          return;
+          return res.status(500).send('Internal Server Error');
         }
 
-        // Render the blog template with the posts and categories data
-        const renderedTemplate = renderBlogTemplate(templateContent, JSON.parse(postsData), JSON.parse(categoriesData));
+        // Render the blog template with the retrieved data
+        const template = Handlebars.compile(data);
+        const posts = JSON.parse(postData);
+        const categories = JSON.parse(categoryData);
+        const renderedTemplate = template({ posts, categories });
         res.send(renderedTemplate);
       });
     });
@@ -57,62 +52,10 @@ app.get('/blog', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
 });
 
-// Helper function to render the blog template
-function renderBlogTemplate(template, postsData, categoriesData) {
-  // Your rendering logic goes here
-  // You can use a templating engine like Handlebars or EJS to render the template
-  // For simplicity, I'll provide a basic example using string interpolation
-
-  let renderedTemplate = template;
-
-  // Replace the post and categories placeholders in the template
-  renderedTemplate = renderedTemplate.replace('{{posts}}', renderPosts(postsData));
-  renderedTemplate = renderedTemplate.replace('{{categories}}', renderCategories(categoriesData));
-
-  return renderedTemplate;
-}
-
-// Helper function to render the posts table
-function renderPosts(postsData) {
-  // Your rendering logic for the posts table goes here
-  // You can use HTML and string manipulation to generate the table
-  // For simplicity, I'll provide a basic example using string interpolation
-
-  let postsTable = '<table>';
-
-  // Iterate over the posts data and generate table rows
-  postsData.forEach((post) => {
-    const row = `<tr><td>${post.title}</td><td>${post.date}</td></tr>`;
-    postsTable += row;
-  });
-
-  postsTable += '</table>';
-
-  return postsTable;
-}
-
-// Helper function to render the categories table
-function renderCategories(categoriesData) {
-  // Your rendering logic for the categories table goes here
-  // You can use HTML and string manipulation to generate the table
-  // For simplicity, I'll provide a basic example using string interpolation
-
-  let categoriesTable = '<table>';
-
-  // Iterate over the categories data and generate table rows
-  categoriesData.forEach((category) => {
-    const row = `<tr><td>${category.name}</td><td>${category.description}</td></tr>`;
-    categoriesTable += row;
-  });
-
-  categoriesTable += '</table>';
-
-  return categoriesTable;
-}
 
 
 
