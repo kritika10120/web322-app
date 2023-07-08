@@ -9,103 +9,111 @@
 *  GitHub Repository URL: 
 *
 
-
-/***************************
-*  WEB322 – Assignment 04
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
-*  (including 3rd party web sites) or distributed to other students.
-* 
-*  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 08-06-2023
-*  Cyclic Web App URL: _________https://web322appassignment03.cyclic.app/___________
-*
-*  GitHub Repository URL: ______https://github.com/kritika10120/web322-app____________
-*
-****************************/
-
 const express = require('express');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 
-// Serve the about.html file
+// Set up static file serving
+app.use(express.static('public'));
+
+// Define a route for the about.html page
 app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/about.html'));
+  res.sendFile(path.join(__dirname, 'public', 'about.html'));
 });
 
-// Serve the categories.json file
-app.get('/categories', (req, res) => {
-  const categoriesPath = path.join(__dirname, 'data/categories.json');
-  fs.readFile(categoriesPath, 'utf8', (err, data) => {
+// Define a route for the blog.html page
+app.get('/blog', (req, res) => {
+  fs.readFile(path.join(__dirname, 'data', 'posts.json'), 'utf8', (err, postsData) => {
     if (err) {
       console.error(err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      const categories = JSON.parse(data);
-      const tableRows = categories.map(category => {
-        return `<tr>
-          <td>${category.id}</td>
-          <td>${category.category}</td>
-        </tr>`;
-      });
-      const table = `<table>
-        <tr>
-          <th>Category ID</th>
-          <th>Category Name</th>
-        </tr>
-        ${tableRows.join('')}
-      </table>`;
-      res.send(table);
+      res.sendStatus(500);
+      return;
     }
-  });
-});
 
-// Serve the posts.json file
-app.get('/posts', (req, res) => {
-  const postsPath = path.join(__dirname, 'data/posts.json');
-  fs.readFile(postsPath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      const posts = JSON.parse(data);
-      const tableRows = posts.map(post => {
-        return `<tr>
-          <td>${post.id}</td>
-          <td>${post.title}</td>
-          <td>${post.postDate}</td>
-          <td>${post.category}</td>
-          <td>${post.published}</td>
-        </tr>`;
+    fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8', (err, categoriesData) => {
+      if (err) {
+        console.error(err);
+        res.sendStatus(500);
+        return;
+      }
+
+      const templatePath = path.join(__dirname, 'views', 'blog.hbs');
+      fs.readFile(templatePath, 'utf8', (err, templateContent) => {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+          return;
+        }
+
+        // Render the blog template with the posts and categories data
+        const renderedTemplate = renderBlogTemplate(templateContent, JSON.parse(postsData), JSON.parse(categoriesData));
+        res.send(renderedTemplate);
       });
-      const table = `<table>
-        <tr>
-          <th>Post ID</th>
-          <th>Title</th>
-          <th>Post Date</th>
-          <th>Category</th>
-          <th>Published</th>
-        </tr>
-        ${tableRows.join('')}
-      </table>`;
-      res.send(table);
-    }
+    });
   });
-});
-
-// Serve the addPost.html file
-app.get('/posts/add', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/addPost.html'));
-});
-
-// Serve the about.html file for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/about.html'));
 });
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is listening on port ${PORT}`);
 });
+
+// Helper function to render the blog template
+function renderBlogTemplate(template, postsData, categoriesData) {
+  // Your rendering logic goes here
+  // You can use a templating engine like Handlebars or EJS to render the template
+  // For simplicity, I'll provide a basic example using string interpolation
+
+  let renderedTemplate = template;
+
+  // Replace the post and categories placeholders in the template
+  renderedTemplate = renderedTemplate.replace('{{posts}}', renderPosts(postsData));
+  renderedTemplate = renderedTemplate.replace('{{categories}}', renderCategories(categoriesData));
+
+  return renderedTemplate;
+}
+
+// Helper function to render the posts table
+function renderPosts(postsData) {
+  // Your rendering logic for the posts table goes here
+  // You can use HTML and string manipulation to generate the table
+  // For simplicity, I'll provide a basic example using string interpolation
+
+  let postsTable = '<table>';
+
+  // Iterate over the posts data and generate table rows
+  postsData.forEach((post) => {
+    const row = `<tr><td>${post.title}</td><td>${post.date}</td></tr>`;
+    postsTable += row;
+  });
+
+  postsTable += '</table>';
+
+  return postsTable;
+}
+
+// Helper function to render the categories table
+function renderCategories(categoriesData) {
+  // Your rendering logic for the categories table goes here
+  // You can use HTML and string manipulation to generate the table
+  // For simplicity, I'll provide a basic example using string interpolation
+
+  let categoriesTable = '<table>';
+
+  // Iterate over the categories data and generate table rows
+  categoriesData.forEach((category) => {
+    const row = `<tr><td>${category.name}</td><td>${category.description}</td></tr>`;
+    categoriesTable += row;
+  });
+
+  categoriesTable += '</table>';
+
+  return categoriesTable;
+}
+
+
+
 
