@@ -10,12 +10,13 @@
 *
 ****************************/
 
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 5500;
+const PORT = 8080;
 
 // Serve the about.html file
 app.get('/about', (req, res) => {
@@ -31,7 +32,20 @@ app.get('/categories', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const categories = JSON.parse(data);
-      res.json(categories);
+      const tableRows = categories.map(category => {
+        return `<tr>
+          <td>${category.id}</td>
+          <td>${category.name}</td>
+        </tr>`;
+      });
+      const table = `<table>
+        <tr>
+          <th>Category ID</th>
+          <th>Category Name</th>
+        </tr>
+        ${tableRows.join('')}
+      </table>`;
+      res.send(table);
     }
   });
 });
@@ -45,7 +59,26 @@ app.get('/posts', (req, res) => {
       res.status(500).send('Internal Server Error');
     } else {
       const posts = JSON.parse(data);
-      res.json(posts);
+      const tableRows = posts.map(post => {
+        return `<tr>
+          <td>${post.id}</td>
+          <td>${post.title}</td>
+          <td>${post.date}</td>
+          <td>${post.category}</td>
+          <td>${post.published}</td>
+        </tr>`;
+      });
+      const table = `<table>
+        <tr>
+          <th>Post ID</th>
+          <th>Title</th>
+          <th>Post Date</th>
+          <th>Category</th>
+          <th>Published</th>
+        </tr>
+        ${tableRows.join('')}
+      </table>`;
+      res.send(table);
     }
   });
 });
