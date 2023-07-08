@@ -8,55 +8,89 @@
 *
 *  GitHub Repository URL: 
 *
-
 const express = require('express');
-const app = express();
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 
-// Serve static files from the "public" folder
-app.use(express.static('public'));
+const app = express();
+const PORT = 8080;
 
-// Define the route for the "Blog" link
-app.get('/blog', (req, res) => {
-  // Read the contents of blog.hbs file
-  fs.readFile(path.join(__dirname, 'views', 'blog.hbs'), 'utf8', (err, data) => {
+// Serve the about.html file
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/about.html'));
+});
+
+// Serve the categories.json file
+app.get('/categories', (req, res) => {
+  const categoriesPath = path.join(__dirname, 'data/categories.json');
+  fs.readFile(categoriesPath, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Internal Server Error');
-    }
-
-    // Read the post data from posts.json
-    fs.readFile(path.join(__dirname, 'data', 'posts.json'), 'utf8', (err, postData) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Internal Server Error');
-      }
-
-      // Read the category data from categories.json
-      fs.readFile(path.join(__dirname, 'data', 'categories.json'), 'utf8', (err, categoryData) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Internal Server Error');
-        }
-
-        // Render the blog template with the retrieved data
-        const template = Handlebars.compile(data);
-        const posts = JSON.parse(postData);
-        const categories = JSON.parse(categoryData);
-        const renderedTemplate = template({ posts, categories });
-        res.send(renderedTemplate);
+      res.status(500).send('Internal Server Error');
+    } else {
+      const categories = JSON.parse(data);
+      const tableRows = categories.map(category => {
+        return `<tr>
+          <td>${category.id}</td>
+          <td>${category.category}</td>
+        </tr>`;
       });
-    });
+      const table = `<table>
+        <tr>
+          <th>Category ID</th>
+          <th>Category Name</th>
+        </tr>
+        ${tableRows.join('')}
+      </table>`;
+      res.send(table);
+    }
   });
 });
 
-// Start the server
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+// Serve the posts.json file
+app.get('/posts', (req, res) => {
+  const postsPath = path.join(__dirname, 'data/posts.json');
+  fs.readFile(postsPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      const posts = JSON.parse(data);
+      const tableRows = posts.map(post => {
+        return `<tr>
+          <td>${post.id}</td>
+          <td>${post.title}</td>
+          <td>${post.postDate}</td>
+          <td>${post.category}</td>
+          <td>${post.published}</td>
+        </tr>`;
+      });
+      const table = `<table>
+        <tr>
+          <th>Post ID</th>
+          <th>Title</th>
+          <th>Post Date</th>
+          <th>Category</th>
+          <th>Published</th>
+        </tr>
+        ${tableRows.join('')}
+      </table>`;
+      res.send(table);
+    }
+  });
 });
 
+// Serve the addPost.html file
+app.get('/posts/add', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/addPost.html'));
+});
 
+// Serve the about.html file for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/about.html'));
+});
 
-
-
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
