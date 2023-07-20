@@ -1,26 +1,24 @@
-<div class="row">
-  <div class="col-md-12">
-    <h2>Posts</h2>
-    <hr />
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Posts</title>
+</head>
+<body>
+    <h2>All Posts</h2>
     {{#if posts.length}}
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each posts}}
-        <tr>
-          <td>{{this.title}}</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+        <ul>
+            {{#each posts}}
+                <li>
+                    <h3>{{this.title}}</h3>
+                    <p>{{this.body}}</p>
+                    <p>Posted on: {{this.postDate}}</p>
+                    <p>Category: {{this.category}}</p>
+                    <p>Published: {{this.published}}</p>
+                </li>
+            {{/each}}
+        </ul>
     {{else}}
-    <p>No results</p>
+        <p>No posts available.</p>
     {{/if}}
-
-  </div>
-</div>
+</body>
+</html>
