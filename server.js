@@ -1,9 +1,9 @@
 /***************************
-*  WEB322 – Assignment 04
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
+*  WEB322 – Assignment 05
+*  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: __Kritika Kritika_____ Student ID: __167103217_____ Date: 07-07-2023
+*  Name: Kritika Kritika Student ID: 167103217 Date: 07-07-2023
 *  Cyclic Web App URL: https://shy-erin-bear-gown.cyclic.app/
 *
 *  GitHub Repository URL: https://github.com/kritika10120/web322-app
@@ -11,82 +11,33 @@
 
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
-
 const app = express();
 const PORT = 8080;
 
-// Serve the about.html file
-app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/about.html'));
-});
+// Require the blog-service module
+const blogService = require('./blog-service');
 
-// Serve the categories.json file
-app.get('/categories', (req, res) => {
-  const categoriesPath = path.join(__dirname, 'data/categories.json');
-  fs.readFile(categoriesPath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      const categories = JSON.parse(data);
-      const tableRows = categories.map(category => {
-        return `<tr>
-          <td>${category.id}</td>
-          <td>${category.category}</td>
-        </tr>`;
-      });
-      const table = `<table>
-        <tr>
-          <th>Category ID</th>
-          <th>Category Name</th>
-        </tr>
-        ${tableRows.join('')}
-      </table>`;
-      res.send(table);
-    }
-  });
-});
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the posts.json file
-app.get('/posts', (req, res) => {
-  const postsPath = path.join(__dirname, 'data/posts.json');
-  fs.readFile(postsPath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      const posts = JSON.parse(data);
-      const tableRows = posts.map(post => {
-        return `<tr>
-          <td>${post.id}</td>
-          <td>${post.title}</td>
-          <td>${post.postDate}</td>
-          <td>${post.category}</td>
-          <td>${post.published}</td>
-        </tr>`;
-      });
-      const table = `<table>
-        <tr>
-          <th>Post ID</th>
-          <th>Title</th>
-          <th>Post Date</th>
-          <th>Category</th>
-          <th>Published</th>
-        </tr>
-        ${tableRows.join('')}
-      </table>`;
-      res.send(table);
-    }
-  });
-});
+// Enable express.urlencoded() middleware to parse request bodies
+app.use(express.urlencoded({ extended: true }));
 
-// Serve the addPost.html file
-app.get('/posts/add', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/addPost.html'));
-});
+// Set up Handlebars as the view engine
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Serve the about.html file for all other routes
+// Add routes for displaying categories, posts, and adding posts
+app.get('/categories', blogService.getAllCategories);
+app.get('/posts', blogService.getAllPosts);
+app.get('/posts/add', blogService.getAddPostForm);
+app.post('/posts/add', blogService.addPost);
+
+// Add routes for deleting categories and posts
+app.get('/categories/delete/:id', blogService.deleteCategory);
+app.get('/posts/delete/:id', blogService.deletePost);
+
+// Redirect any other routes to the about page
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/about.html'));
 });
