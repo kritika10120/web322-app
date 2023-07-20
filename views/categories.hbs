@@ -1,16 +1,18 @@
-<div class="row">
-  <div class="col-md-12">
-    <h2>Categories</h2>
-    <hr />
-
-    {{#if categories}}
-      <ul>
-        {{#each categories}}
-          <li>{{this.id}}: {{this.category}}</li>
-        {{/each}}
-      </ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Categories</title>
+</head>
+<body>
+    <h2>All Categories</h2>
+    {{#if categories.length}}
+        <ul>
+            {{#each categories}}
+                <li>{{this.category}}</li>
+            {{/each}}
+        </ul>
     {{else}}
-      <p>No results</p>
+        <p>No categories available.</p>
     {{/if}}
-  </div>
-</div>
+</body>
+</html>
