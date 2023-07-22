@@ -12,54 +12,78 @@
 ********************************************************************************/
 
 const express = require('express');
-const path = require('path');
 const app = express();
-const PORT = 8080;
+const port = 8080;
 
-// Require the blog-service module
+app.set('view engine', 'hbs');
+app.use(express.static('public'));
+
 const blogService = require('./blog-service');
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+function getPostsData() {
+  const posts = blogService.getPosts();
+  const categories = blogService.getCategories();
 
-// Enable express.urlencoded() middleware to parse request bodies
+  // include a "selected" property for each post
+  const postsData = posts.map(post => {
+    const selectedCategory = categories.find(category => category.id === post.category);
+    return {
+      ...post,
+      categories,
+      selectedCategory,
+    };
+  });
+
+  return { postsData };
+}
+
+app.get('/', (req, res) => {
+  res.render('about', { pageTitle: 'About' });
+});
+
+app.get('/addPost', (req, res) => {
+  res.render('addPost', { pageTitle: 'Add Post' });
+});
+
+app.post('/addPost', (req, res) => {
+  // Code to handle adding a new post
+  res.redirect('/posts');
+});
+
+app.get('/posts', (req, res) => {
+  const { postsData } = getPostsData();
+  res.render('posts', { pageTitle: 'Posts', postsData, categories: blogService.getCategories() });
+});
+
+app.get('/categories', (req, res) => {
+  const categories = blogService.getCategories();
+  res.render('categories', { pageTitle: 'Categories', categories });
+});
+
+// Handle DELETE request to remove a category
+app.delete('/categories/:id', (req, res) => {
+  const categoryId = parseInt(req.params.id);
+  blogService.removeCategory(categoryId);
+  res.redirect('/categories');
+});
+
+// Adding middleware to handle the "_method" field in the form for overriding the HTTP method
 app.use(express.urlencoded({ extended: true }));
 
-// Set up Handlebars as the view engine
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Import the Sequelize models
-const { sequelize } = require('./models');
-const Post = require('./models/post');
-const Category = require('./models/category');
-
-// Define associations between models if needed (e.g., Post.belongsTo(Category))
-
-// Add routes for displaying categories, posts, and adding posts
-app.get('/categories', blogService.getAllCategories);
-app.get('/posts', blogService.getAllPosts);
-app.get('/posts/add', blogService.getAddPostForm);
-app.post('/posts/add', blogService.addPost);
-app.get('/posts/delete/:id', blogService.deletePostById);
-
-// Add routes for displaying categories and adding categories
-app.get('/categories/add', (req, res) => {
-  res.render('addCategory');
-});
-app.post('/categories/add', blogService.addCategory);
-app.get('/categories/delete/:id', blogService.deleteCategoryById);
-
-// Redirect any other routes to the about page
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/about.html'));
+// Handle POST request with "_method" field to override the HTTP method
+app.post('*', (req, res, next) => {
+  if (req.body && req.body._method) {
+    req.method = req.body._method;
+    next();
+  } else {
+    next();
+  }
 });
 
-// Start the server after synchronizing the models with the database
-sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-}).catch(err => {
-  console.error('Unable to synchronize the models:', err);
+app.get('/posts/add', (req, res) => {
+  res.render('addPost', { pageTitle: 'Add Post' });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
