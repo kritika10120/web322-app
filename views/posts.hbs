@@ -1,24 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Posts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+
+    <style>
+        /* Body background color and font color */
+        body {
+            background-color: #F0F5E9;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            position: relative; /* Set the container as a relative positioned element */
+        }
+
+        /* Heading styles */
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Button styles */
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            position: absolute; /* Set the button as an absolute positioned element */
+            top: 10px; /* Distance from the top */
+            right: 10px; /* Distance from the right */
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h2>All Posts</h2>
-    {{#if posts.length}}
-        <ul>
-            {{#each posts}}
-                <li>
-                    <h3>{{this.title}}</h3>
-                    <p>{{this.body}}</p>
-                    <p>Posted on: {{this.postDate}}</p>
-                    <p>Category: {{this.category}}</p>
-                    <p>Published: {{this.published}}</p>
-                </li>
-            {{/each}}
-        </ul>
-    {{else}}
-        <p>No posts available.</p>
-    {{/if}}
+    <div class="container">
+        <h1>Posts</h1>
+        <a class="button" href="/addPost">Add Post</a> <!-- set the button to the top right corner -->
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Post ID</th>
+                    <th>Title</th>
+                    <th>Post Date</th>
+                    <th>Category</th>
+                    <th>Published</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each postsData}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{title}}</td>
+                        <td>{{postDate}}</td>
+                        <td>
+                            {{#if selectedCategory}}
+                                {{selectedCategory.name}}
+                            {{else}}
+                                No Category
+                            {{/if}}
+                        </td>
+                        <td>{{published}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
