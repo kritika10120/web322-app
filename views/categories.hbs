@@ -1,18 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Categories</title>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 0;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .remove-button {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .remove-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
 </head>
 <body>
-    <h2>All Categories</h2>
-    {{#if categories.length}}
-        <ul>
-            {{#each categories}}
-                <li>{{this.category}}</li>
-            {{/each}}
-        </ul>
-    {{else}}
-        <p>No categories available.</p>
-    {{/if}}
+    <h1>Categories</h1>
+    <table>
+        <tr>
+            <th>Category ID</th>
+            <th>Category Name</th>
+            <th>Remove</th>
+        </tr>
+        {{#each categories}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>
+                <form action="/categories/remove/{{id}}" method="post">
+                    <button class="remove-button" type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
 </body>
 </html>
