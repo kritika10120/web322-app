@@ -10,13 +10,14 @@
 *
 *  GitHub Repository URL: https://github.com/kritika10120/web322-app
 ********************************************************************************/
-
 const express = require('express');
 const app = express();
 const port = 8080;
+const bodyParser = require('body-parser'); // Importing body-parser
 
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true })); // Adding body-parser middleware
 
 const blogService = require('./blog-service');
 
@@ -45,8 +46,18 @@ app.get('/addPost', (req, res) => {
   res.render('addPost', { pageTitle: 'Add Post' });
 });
 
-app.post('/addPost', (req, res) => {
-  // Code to handle adding a new post
+app.post('/submitPost', (req, res) => {
+  // Code to handle form submission and add the new post to the data store
+  const newPost = {
+    title: req.body.title,
+    body: req.body.body,
+    category: req.body.category,
+    visibility: req.body.visibility,
+  };
+
+  blogService.addPost(newPost);
+
+  // Redirect the user back to the /posts page after submission
   res.redirect('/posts');
 });
 
@@ -82,6 +93,12 @@ app.post('*', (req, res, next) => {
 
 app.get('/posts/add', (req, res) => {
   res.render('addPost', { pageTitle: 'Add Post' });
+});
+
+// New route handler for /blog
+app.get('/blog', (req, res) => {
+  // Fetch data for your blog page here if needed
+  res.render('blog', { pageTitle: 'Blog' }); 
 });
 
 app.listen(port, () => {
