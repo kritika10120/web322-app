@@ -61,6 +61,13 @@
 
         tr:hover {
             background-color: #f2f2f2;
+       .remove-button {
+            display: inline-block;
+            background-color: red;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -77,26 +84,41 @@
                     <th>Post Date</th>
                     <th>Category</th>
                     <th>Published</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>
-                {{#each postsData}}
-                    <tr>
-                        <td>{{id}}</td>
-                        <td>{{title}}</td>
-                        <td>{{postDate}}</td>
-                        <td>
-                            {{#if selectedCategory}}
-                                {{selectedCategory.name}}
-                            {{else}}
-                                No Category
-                            {{/if}}
-                        </td>
-                        <td>{{published}}</td>
-                    </tr>
-                {{/each}}
-            </tbody>
+    {{#each postsData}}
+        <tr data-post-id="{{id}}">
+            <td>{{id}}</td>
+            <td>{{title}}</td>
+            <td>{{postDate}}</td>
+            <td>
+                {{#if selectedCategory}}
+                    {{selectedCategory.name}}
+                {{else}}
+                    No Category
+                {{/if}}
+            </td>
+            <td>{{published}}</td>
+            <td>
+                <button class="remove-button" onclick="removePost('{{id}}')">Remove</button>
+            </td>
+        </tr>
+    {{/each}}
+</tbody>
         </table>
     </div>
+
+    <script>
+        // JavaScript function to handle the click event of the "Remove" button
+        function removePost(postId) {
+           
+            const rowToRemove = document.querySelector(`[data-post-id="${postId}"]`);
+            if (rowToRemove) {
+                rowToRemove.remove();
+            }
+        }
+    </script>
 </body>
 </html>
