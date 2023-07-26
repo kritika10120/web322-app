@@ -55,16 +55,25 @@
             <th>Remove</th>
         </tr>
         {{#each categories}}
-        <tr>
+        <tr data-post-id="{{id}}">
             <td>{{id}}</td>
             <td>{{name}}</td>
             <td>
-                <form action="/categories/remove/{{id}}" method="post">
-                    <button class="remove-button" type="submit">Remove</button>
-                </form>
+                <button class="remove-button" onclick="removePost('{{id}}')">Remove</button>
             </td>
         </tr>
         {{/each}}
     </table>
+
+    <script>
+        // JavaScript function to handle the click event of the "Remove" button
+        function removePost(postId) {
+            const rowToRemove = document.querySelector(`[data-post-id="${postId}"]`);
+            if (rowToRemove) {
+                rowToRemove.remove();
+                console.log(`Removing category with ID ${postId}`);
+            }
+        }
+    </script>
 </body>
 </html>
