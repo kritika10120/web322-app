@@ -4,7 +4,7 @@
 *  (including 3rd party web sites) or distributed to other students.
 * 
 *  Name: Kritika Kritika Student ID: 167103217 Date: 08-07-2023
-*  Cyclic Web App URL: https://silly-jewelry-hare.cyclic.app/blog
+*  Cyclic Web App URL: https://silly-jewelry-hare.cyclic.app
 *
 *  GitHub Repository URL: https://github.com/kritika10120/web322-app
 ****************************/
