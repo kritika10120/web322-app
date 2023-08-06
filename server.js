@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up express-session
 app.use(session({
-  secret: 'your-secret-key',
+  secret: 'Rn9GfSesvWPMcYldzugpto8iw4XC2mNH',
   resave: true,
   saveUninitialized: true
 }));
