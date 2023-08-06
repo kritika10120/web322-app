@@ -1,3 +1,13 @@
+/***************************
+*  WEB322 – Assignment 06
+*  I declare that this assignment is my own work in accordance with Seneca Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
+*  (including 3rd party web sites) or distributed to other students.
+* 
+*  Name: Kritika Kritika Student ID: 167103217 Date: 08-07-2023
+*  Cyclic Web App URL: https://silly-jewelry-hare.cyclic.app/blog
+*
+*  GitHub Repository URL: https://github.com/kritika10120/web322-app
+****************************/
 const express = require('express');
 const session = require('express-session');
 const app = express();
