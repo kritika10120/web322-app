@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap CSS -->
@@ -52,8 +52,8 @@
     </style>
 </head>
 <body>
-     <!-- Navigation Bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default sticky-top">
         <div class="container-fluid">
            
             <div class="navbar-header">
@@ -85,23 +85,25 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <h1>Categories</h1>
-    <table>
-        <tr>
-            <th>Category ID</th>
-            <th>Category Name</th>
-            <th>Remove</th>
-        </tr>
-        {{#each categories}}
-        <tr data-post-id="{{id}}">
-            <td>{{id}}</td>
-            <td>{{name}}</td>
-            <td>
-                <button class="remove-button" onclick="removePost('{{id}}')">Remove</button>
-            </td>
-        </tr>
-        {{/each}}
-    </table>
+    <div class="container-fluid" style="margin-top: 70px;"> <!-- Add top margin to create spacing -->
+        <h1>Categories</h1>
+        <table>
+            <tr>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th>Remove</th>
+            </tr>
+            {{#each categories}}
+            <tr data-post-id="{{id}}">
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>
+                    <button class="remove-button" onclick="removePost('{{id}}')">Remove</button>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
 
     <script>
         // JavaScript function to handle the click event of the "Remove" button
