@@ -11,13 +11,24 @@
 *  GitHub Repository URL: https://github.com/kritika10120/web322-app
 ********************************************************************************/
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const port = 8080;
-const bodyParser = require('body-parser'); // Importing body-parser
+const bodyParser = require('body-parser');
+
+// Import auth-service.js
+const authData = require('./auth-service');
 
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true })); // Adding body-parser middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Set up express-session
+app.use(session({
+  secret: 'your-secret-key',
+  resave: true,
+  saveUninitialized: true
+}));
 
 const blogService = require('./blog-service');
 
@@ -25,7 +36,6 @@ function getPostsData() {
   const posts = blogService.getPosts();
   const categories = blogService.getCategories();
 
-  // include a "selected" property for each post
   const postsData = posts.map(post => {
     const selectedCategory = categories.find(category => category.id === post.category);
     return {
@@ -38,69 +48,106 @@ function getPostsData() {
   return { postsData };
 }
 
+// Middleware to ensure user is logged in
+function ensureLogin(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
 app.get('/', (req, res) => {
+  res.redirect('/blog');
+});
+
+app.get('/about', (req, res) => {
   res.render('about', { pageTitle: 'About' });
 });
 
-app.get('/addPost', (req, res) => {
-  res.render('addPost', { pageTitle: 'Add Post' });
-});
-
-app.post('/submitPost', (req, res) => {
-  // Code to handle form submission and add the new post to the data store
-  const newPost = {
-    title: req.body.title,
-    body: req.body.body,
-    category: req.body.category,
-    visibility: req.body.visibility,
-  };
-
-  blogService.addPost(newPost);
-
-  // Redirect the user back to the /posts page after submission
-  res.redirect('/posts');
-});
-
-app.get('/posts', (req, res) => {
+app.get('/blog', (req, res) => {
   const { postsData } = getPostsData();
-  res.render('posts', { pageTitle: 'Posts', postsData, categories: blogService.getCategories() });
+  res.render('blog', { pageTitle: 'Blog', postsData, user: req.session.user });
 });
 
-app.get('/categories', (req, res) => {
+app.get('/login', (req, res) => {
+  res.render('login', { pageTitle: 'Login' });
+});
+
+app.post('/login', (req, res) => {
+  req.body.userAgent = req.get('User-Agent');
+
+  authData.CheckUser(req.body)
+    .then(user => {
+      req.session.user = {
+        userName: user.userName,
+        email: user.email,
+        loginHistory: user.loginHistory
+      };
+      res.redirect('/posts');
+    })
+    .catch(err => {
+      res.render('login', { errorMessage: err, userName: req.body.userName });
+    });
+});
+
+app.get('/register', (req, res) => {
+  res.render('register', { pageTitle: 'Register' });
+});
+
+app.post('/register', (req, res) => {
+  authData.RegisterUser(req.body)
+    .then(() => {
+      res.redirect('/posts');
+    })
+    .catch(err => {
+      res.render('register', { errorMessage: err, userName: req.body.userName });
+    });
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.get('/userHistory', ensureLogin, (req, res) => {
+  res.render('userHistory', { pageTitle: 'User History', user: req.session.user });
+});
+
+app.get('/posts', ensureLogin, (req, res) => {
+  const { postsData } = getPostsData();
+  res.render('posts', { pageTitle: 'Posts', postsData });
+});
+
+app.get('/categories', ensureLogin, (req, res) => {
   const categories = blogService.getCategories();
   res.render('categories', { pageTitle: 'Categories', categories });
 });
 
-// Handle DELETE request to remove a category
-app.delete('/categories/:id', (req, res) => {
+app.delete('/categories/:id', ensureLogin, (req, res) => {
   const categoryId = parseInt(req.params.id);
   blogService.removeCategory(categoryId);
   res.redirect('/categories');
 });
-
-// Adding middleware to handle the "_method" field in the form for overriding the HTTP method
-app.use(express.urlencoded({ extended: true }));
-
-// Handle POST request with "_method" field to override the HTTP method
-app.post('*', (req, res, next) => {
-  if (req.body && req.body._method) {
-    req.method = req.body._method;
-    next();
-  } else {
-    next();
-  }
+app.get('/add-post', ensureLogin, (req, res) => {
+  const categories = blogService.getCategories();
+  res.render('addPost', { pageTitle: 'Add Post', categories });
 });
 
-app.get('/posts/add', (req, res) => {
-  res.render('addPost', { pageTitle: 'Add Post' });
-});
+app.post('/add-post', ensureLogin, (req, res) => {
+  const { title, content, category } = req.body;
+  const post = {
+    title,
+    content,
+    category: parseInt(category)
+  };
 
-// New route handler for /blog
-app.get('/blog', (req, res) => {
-  // Fetch data for your blog page here if needed
-  res.render('blog', { pageTitle: 'Blog' }); 
+  blogService.addPost(post);
+
+  res.redirect('/posts');
 });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
