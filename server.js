@@ -1,15 +1,3 @@
-/*********************************************************************************
-*  WEB322 – Assignment 05
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part of this
-*  assignment has been copied manually or electronically from any other source (including web sites) or 
-*  distributed to other students.
-* 
-*  Name: Kritika Kritika Student ID: 167103217 Date: 07-20-2023
-*
-*  Cyclic Web App URL: https://crabby-kit-elk.cyclic.app/
-*
-*  GitHub Repository URL: https://github.com/kritika10120/web322-app
-********************************************************************************/
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -129,6 +117,8 @@ app.delete('/categories/:id', ensureLogin, (req, res) => {
   blogService.removeCategory(categoryId);
   res.redirect('/categories');
 });
+
+// ... (other routes for adding, editing, and viewing posts, etc.)
 app.get('/add-post', ensureLogin, (req, res) => {
   const categories = blogService.getCategories();
   res.render('addPost', { pageTitle: 'Add Post', categories });
@@ -150,4 +140,3 @@ app.post('/add-post', ensureLogin, (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
