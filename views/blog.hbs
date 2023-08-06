@@ -1,92 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>WEB322 Blog</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            margin: 0 auto;
-            border: 1px solid #ddd;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css" />
 
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
-        }
-
-        .content {
-            margin-bottom: 20px;
-        }
-
-        .featured-image {
-            float: left;
-            margin-right: 20px;
-        }
-
-        .sidebar {
-            float: right;
-            width: 40%;
-        }
-    </style>
+    <title>WEB322 Kritika Kritika Blog</title>
 </head>
+
 <body>
-        <h1>WEB322</h1>
-    </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+           
+            <div class="navbar-header">
+                <!-- Navigation menu toggle button for small screens -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Brand/logo of the website -->
+                <span class="navbar-brand" href="#">WEB322 - Student Name</span>
+            </div>
 
-    <div class="content">
-        <div class="featured-image">
-            <img src="feature-image.jpg" alt="Feature Image">
+            <!-- Navigation menu items -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active" ><a href="/blog">Blog</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+
+                <!-- User registration and login buttons -->
+                <form class="navbar-form navbar-right">
+                    <a href="/register" class="btn btn-success"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Register</a>
+                    <a href="/login" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;&nbsp;Log In</a>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- Main content area -->
+    <div class="container" style="padding-top:60px">
+        <div class="row">
+            <!-- Main content section -->
+            <section class="main col-md-9">
+                <article>
+                    <h2>asdsa</h2>
+                    <img src="http://res.cloudinary.com/dev8otxwf/image/upload/v1691325094/qjydlxlfspvtogawc76z.jpg" alt="feature Image" style="width:100%" />
+                    <br /><br />
+                    asdasd
+                    <br /><br />
+                    <strong>Category:</strong> 232<br />
+                    <strong>Last Updated:</strong> 2023-08-06
+                </article>
+            </section>
+
+            <!-- Sidebar section -->
+            <aside class="col-md-3">
+                <br /><br />
+                <h4>Posts</h4>
+                <ul class="list-group">
+                    <a href="/blog/270?category=" class="list-group-item">asdsa</a> 
+                    <a href="/blog/269?category=" class="list-group-item">as</a> 
+                </ul>
+
+                <h4>Categories</h4>
+                <ul class="list-group">
+                    <a href="/blog?category=232" class="list-group-item">cars</a>
+                </ul>
+            </aside>
         </div>
-        <h2>WEB322 is the best</h2>
-        <p>Category: 204</p>
-        <p>Last Updated: 2023-07-26</p>
     </div>
 
-    <div class="sidebar">
-        <table>
-            <tr>
-                <th>Posts</th>
-            </tr>
-            <tr>
-                <td>WEB322</td>
-            </tr>
-            <tr>
-                <td>214</td>
-            </tr>
-            <tr>
-                <td>123213</td>
-            </tr>
-        </table>
+    <!-- JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-        <table>
-            <tr>
-                <th>Categories</th>
-            </tr>
-            <tr>
-                <td>science</td>
-            </tr>
-            <tr>
-                <td>Computer</td>
-            </tr>
-            <tr>
-                <td>WEB322</td>
-            </tr>
-        </table>
-    </div>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
